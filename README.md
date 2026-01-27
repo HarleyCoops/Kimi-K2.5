@@ -1,20 +1,20 @@
 <div align="center">
   <picture>
-      <img src="figures/kimi-logo.png" width="30%" alt="Kimi K2: Open Agentic Intelligence">
+      <img src="figures/kimi-logo.png" width="30%" alt="Kimi K2.5: Visual Agentic Intelligence">
   </picture>
 </div>
 
 <hr>
 
 <div align="center" style="line-height:1">
-  <a href="https://www.kimi.com" target="_blank"><img alt="Chat" src="https://img.shields.io/badge/🤖%20Chat-Kimi%20K2-ff6b6b?color=1783ff&logoColor=white"/></a>
+  <a href="https://www.kimi.com" target="_blank"><img alt="Chat" src="https://img.shields.io/badge/🤖%20Chat-Kimi%20K2.5-ff6b6b?color=1783ff&logoColor=white"/></a>
   <a href="https://www.moonshot.ai" target="_blank"><img alt="Homepage" src="https://img.shields.io/badge/Homepage-Moonshot%20AI-white?logo=Kimi&logoColor=white"/></a>
 </div>
 
 <div align="center" style="line-height: 1;">
-  <a href="https://huggingface.co/moonshotai" target="_blank"><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Moonshot%20AI-ffc107?color=ffc107&logoColor=white"/></a>
+  <a href="https://huggingface.co/moonshotai/Kimi-K2.5" target="_blank"><img alt="Hugging Face" src="https://img.shields.io/badge/%F0%9F%A4%97%20Hugging%20Face-Kimi--K2.5-ffc107?color=ffc107&logoColor=white"/></a>
   <a href="https://twitter.com/kimi_moonshot" target="_blank"><img alt="Twitter Follow" src="https://img.shields.io/badge/Twitter-Kimi.ai-white?logo=x&logoColor=white"/></a>
-    <a href="https://discord.gg/TYU2fdJykW" target="_blank"><img alt="Discord" src="https://img.shields.io/badge/Discord-Kimi.ai-white?logo=discord&logoColor=white"/></a>
+  <a href="https://discord.gg/TYU2fdJykW" target="_blank"><img alt="Discord" src="https://img.shields.io/badge/Discord-Kimi.ai-white?logo=discord&logoColor=white"/></a>
 </div>
 
 <div align="center" style="line-height: 1;">
@@ -22,357 +22,244 @@
 </div>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;Paper Link (coming soon)</b>
+<b>📰&nbsp;&nbsp;<a href="https://www.kimi.com/blog/kimi-k2-5.html">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🤗&nbsp;&nbsp;<a href="https://huggingface.co/moonshotai/Kimi-K2.5">Model Card</a></b>
 </p>
 
-## 1. Model Introduction
+## Kimi K2.5: Visual Agentic Intelligence
 
-Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 billion activated parameters and 1 trillion total parameters. Trained with the Muon optimizer, Kimi K2 achieves exceptional performance across frontier knowledge, reasoning, and coding tasks while being meticulously optimized for agentic capabilities.
+Kimi K2.5 is Moonshot AI's state-of-the-art **native multimodal model** with revolutionary capabilities:
 
-### Key Features
-- Large-Scale Training: Pre-trained a 1T parameter MoE model on 15.5T tokens with zero training instability.
-- MuonClip Optimizer: We apply the Muon optimizer to an unprecedented scale, and develop novel optimization techniques to resolve instabilities while scaling up.
-- Agentic Intelligence: Specifically designed for tool use, reasoning, and autonomous problem-solving.
+| Feature | Capability |
+|---------|------------|
+| **Agent Swarm** | Up to 100 sub-agents, 1,500 parallel tool calls, 4.5x speedup |
+| **Visual Coding** | Image/video to code, UI debugging, website reconstruction |
+| **Thinking Mode** | Deep reasoning with explicit thought traces |
+| **Context** | 256K tokens (doubled from K2's 128K) |
+| **Multimodal** | Native text + image + video understanding |
 
-### Model Variants
-- **Kimi-K2-Base**: The foundation model, a strong start for researchers and builders who want full control for fine-tuning and custom solutions.
-- **Kimi-K2-Instruct**: The post-trained model best for drop-in, general-purpose chat and agentic experiences. It is a reflex-grade model without long thinking.
-
-### Quick Start
-
-Get started with Kimi-K2 in just a few commands using our custom setup tools:
+## Quick Start
 
 ```bash
 # 1. Install dependencies
 pip install -r requirements.txt
 
-# 2. Set up your API key (professional setup utility)
-python3 setup_api_key.py
+# 2. Set up your API key
+export MOONSHOT_API_KEY="your_api_key"
+# Or use our setup utility: python setup_api_key.py
 
-# 3. Run a quick test
-python3 quick_test.py
-
-# 4. Explore comprehensive examples
-python3 kimi_k2_api_example.py
-
-# 5. Test tool capabilities and MCP integration
-python3 explore_tools.py
+# 3. Run quick start
+python examples/quick_start.py
 ```
 
-### Custom Tools We've Built
-
-This repository includes several professionally crafted utilities:
-
-| Tool | Purpose | Features |
-|------|---------|----------|
-| **`setup_api_key.py`** | Professional API key configuration | • PhD-level academic presentation<br>• Secure credential handling<br>• API key validation<br>• Cross-platform support |
-| **`quick_test.py`** | Rapid functionality verification | • Basic tool calling test<br>• Calculator function demo<br>• Error handling validation |
-| **`kimi_k2_api_example.py`** | Comprehensive implementation guide | • Non-streaming & streaming modes<br>• Multiple tool examples<br>• Production-ready patterns |
-| **`explore_tools.py`** | Advanced tool capability testing | • Custom tool creation patterns<br>• MCP integration examples<br>• Tool chaining demonstrations<br>• System command interfaces |
-| **`validate_tool_calling.py`** | Implementation validation | • Official guidance compliance<br>• Function signature testing<br>• Bug detection and reporting |
-
-These tools demonstrate best practices for Kimi-K2 integration and provide production-ready starting points for your own implementations.
-
-## 2. Model Summary
-
-<div align="center">
-
-
-| | |
-|:---:|:---:|
-| **Architecture** | Mixture-of-Experts (MoE) |
-| **Total Parameters** | $1 \times 10^{12}$ (1T) |
-| **Activated Parameters** | $32 \times 10^9$ (32B) |
-| **Number of Layers** (Dense layer included) | 61 |
-| **Number of Dense Layers** | 1 |
-| **Attention Hidden Dimension** | 7168 |
-| **MoE Hidden Dimension** (per Expert) | 2048 |
-| **Number of Attention Heads** | 64 |
-| **Number of Experts** | 384 |
-| **Selected Experts per Token** | 8 |
-| **Number of Shared Experts** | 1 |
-| **Vocabulary Size** | $160 \times 10^3$ (160K) |
-| **Context Length** | $128 \times 10^3$ (128K) tokens |
-| **Attention Mechanism** | MLA |
-| **Activation Function** | SwiGLU |
-</div>
-
-## 3. The Muon Breakthrough: Achieving Unprecedented Scale with Zero Instability
-
-### The Muon Optimizer: Matrix-Aware Optimization
-
-The [Muon optimizer](https://github.com/KellerJordan/Muon) represents a fundamental shift from traditional optimization approaches. Unlike AdamW or SGD that treat neural network parameters as vectors, **Muon exploits the matrix structure** of weight parameters, using geometry-aware updates and spectral norm constraints.
-
-**Core Mathematical Innovation:**
-
-$$W \leftarrow W - \eta \times \sqrt{\frac{\text{fan-out}}{\text{fan-in}}} \times \text{NewtonSchulz}(\nabla_W L)$$
-
-Where $\text{NewtonSchulz}()$ performs orthogonalization using Newton-Schulz iteration:
-
-$$\text{NewtonSchulz}(G) = \text{orthogonalize}(G) \text{ via iterative refinement}$$
-
-$$X_{k+1} = aX_k + B_k X_k \text{ where } B_k = bA_k + cA_k^2, \; A_k = X_k X_k^T$$
-
-This provides second-order-like benefits with minimal computational overhead (<1%).
-
-### MuonClip: Scaling to Trillion Parameters
-
-Kimi K2 represents the **first successful training of a trillion-parameter model** using the Muon optimizer family. Our **MuonClip** variant introduces critical innovations:
-
-**Key Achievements:**
-- **$10^{12}$ Parameter Scale**: Successfully trained the largest Muon-optimized model to date
-- **$15.5 \times 10^{12}$ Token Training**: Completed full training with zero instability incidents  
-- **$2\times$ Efficiency**: Achieved $\sim2\times$ computational efficiency compared to AdamW at scale
-- **Perfect Stability**: Zero training instabilities throughout the entire process
-
-### Technical Breakthroughs in MuonClip
-
-1. **Extreme-Scale Stability**: Traditional optimizers face catastrophic failures beyond hundreds of billions of parameters. MuonClip's novel clipping and normalization techniques maintain stable gradients at trillion-parameter scales.
-
-2. **MoE-Optimized Updates**: Specialized parameter update mechanisms for mixture-of-experts architectures, efficiently handling 32B activated parameters out of 1T total.
-
-3. **Memory-Efficient Implementation**: Advanced techniques enabling trillion-parameter training on existing hardware infrastructure.
-
-4. **Gradient Conditioning**: Matrix-aware orthogonalization provides superior gradient conditioning compared to vector-based optimizers.
-
-### Why Muon Matters for AI
-
-**Compared to AdamW:**
-- 2× computational efficiency in large-scale training
-- Better scaling properties without extensive hyperparameter tuning
-- Superior convergence characteristics at extreme scales
-
-**Matrix-Aware Advantages:**
-- Direct exploitation of weight matrix structure
-- Implicit regularization via spectral norm constraints  
-- Improved gradient conditioning through orthogonalization
-- Second-order benefits without Hessian computation overhead
-
-### Research Foundation
-
-This work builds on recent breakthroughs in optimizer research:
-- **Original Muon**: Developed by Keller Jordan for geometry-aware optimization
-- **Scaling Research**: Recent work showing Muon's superior scaling properties
-- **Theoretical Foundation**: Matrix optimization theory applied to neural networks
-
-> **Technical Details**: Full mathematical formulations and training procedures will be detailed in our upcoming research paper. MuonClip represents months of research into optimizer theory and distributed training at unprecedented scales.
-
-## 4. Tool Calling Capabilities
-
-### Native Tool Support
-
-Kimi K2 has been specifically optimized for tool calling and agentic capabilities. The model:
-- Does not have built-in native tools - all tools must be explicitly defined
-- Accepts any custom tool definition following the OpenAI function schema
-- Can chain multiple tools together autonomously
-- Supports complex tool patterns including system commands, file operations, and API requests
-
-### Creating Custom Tools
+### Basic Usage
 
 ```python
-# Example: Custom tool definition
-tool = {
-    "type": "function",
-    "function": {
-        "name": "execute_command",
-        "description": "Execute a system command",
-        "parameters": {
-            "type": "object",
-            "required": ["command"],
-            "properties": {
-                "command": {
-                    "type": "string",
-                    "description": "The command to execute"
-                }
-            }
-        }
-    }
-}
+from kimi_client import KimiClient, KimiMode
+
+# Create client
+client = KimiClient()
+
+# Instant mode (fast)
+response = client.chat("What is 2+2?", mode=KimiMode.INSTANT)
+print(response.content)
+
+# Thinking mode (with reasoning)
+response = client.chat("Prove the Pythagorean theorem", mode=KimiMode.THINKING)
+print(f"Reasoning: {response.reasoning}")
+print(f"Answer: {response.content}")
+
+# Image understanding
+response = client.chat_with_image("Convert this UI to code", "screenshot.png")
+print(response.content)
 ```
 
-### MCP (Model Context Protocol) Integration
+## Operating Modes
 
-**Yes, you can create an MCP bridge tool** that enables Kimi K2 to interface with any MCP server:
+| Mode | Temperature | Best For | Key Feature |
+|------|-------------|----------|-------------|
+| **INSTANT** | 0.6 | Quick queries, chatbots | Fast, no reasoning traces |
+| **THINKING** | 1.0 | Math, coding, research | Visible reasoning process |
+| **AGENT** | 0.6 | Autonomous tasks | 200-300 tool steps |
+| **SWARM** | 1.0 | Complex workflows | 100 parallel agents |
+
+## Project Structure
+
+```
+Kimi-K2/
+├── kimi_client.py          # Unified K2.5 client (all modes)
+├── config.py               # Model configs and settings
+│
+├── multimodal/             # Image & video capabilities
+│   ├── image_understanding.py
+│   └── visual_coding.py    # UI to code generation
+│
+├── swarm/                  # Multi-agent orchestration
+│   ├── orchestrator.py     # Swarm controller
+│   └── agents/             # Sub-agent types
+│
+├── tools/                  # Tool calling infrastructure
+│   ├── parallel_executor.py    # 1,500 concurrent calls
+│   ├── thinking_tools.py       # 300-step chains
+│   └── builtin_tools.py        # Pre-built tools
+│
+├── live_demos/             # Real-world integrations
+│   └── browser_agent.py    # Playwright automation
+│
+├── examples/               # Quick start guides
+│   ├── quick_start.py
+│   └── mode_comparison.py
+│
+└── legacy/                 # K2 code (preserved)
+```
+
+## Key Features
+
+### 1. Agent Swarm
+
+Orchestrate up to 100 sub-agents for complex parallel workflows:
 
 ```python
-mcp_bridge_tool = {
-    "type": "function",
-    "function": {
-        "name": "mcp_server_request",
-        "description": "Send requests to MCP servers",
-        "parameters": {
-            "type": "object",
-            "required": ["server", "method", "params"],
-            "properties": {
-                "server": {
-                    "type": "string",
-                    "description": "MCP server identifier"
-                },
-                "method": {
-                    "type": "string",
-                    "description": "MCP method to call"
-                },
-                "params": {
-                    "type": "object",
-                    "description": "Method parameters"
-                }
-            }
-        }
-    }
-}
+from swarm import SwarmOrchestrator
+
+orchestrator = SwarmOrchestrator()
+result = await orchestrator.execute(
+    "Research the competitive landscape of electric vehicles"
+)
+print(result.summary)
 ```
 
-This enables Kimi K2 to:
-- Interface with filesystem, git, database, and other MCP servers
-- Leverage the full MCP ecosystem
-- Create autonomous agents with access to MCP tools
+**Capabilities:**
+- Automatic task decomposition
+- Dynamic agent specialization
+- 1,500 parallel tool calls
+- 4.5x speedup vs single agent
 
-### Tool Exploration
+### 2. Visual Coding
 
-Explore advanced tool capabilities with our comprehensive testing suite:
-
-```bash
-# Comprehensive tool capability exploration
-python3 explore_tools.py
-
-# Validate implementations against official guidance
-python3 validate_tool_calling.py
-
-# Quick functionality test
-python3 quick_test.py
-```
-
-**`explore_tools.py`** demonstrates:
-- Custom tool creation patterns for system commands, file operations, and API requests
-- Tool chaining capabilities and multi-step workflows
-- MCP (Model Context Protocol) integration possibilities
-- Advanced agentic workflow patterns
-
-**`validate_tool_calling.py`** provides:
-- Compliance testing against official documentation
-- Function signature compatibility validation
-- Bug detection in implementation patterns
-- Comprehensive error analysis and reporting
-
-## 5. Deployment
-> [!Note]
-> You can access Kimi K2's API on https://platform.moonshot.ai , we provide OpenAI/Anthropic-compatible API for you.
->
-> The Anthropic-compatible API maps temperature by `real_temperature = request_temperature * 0.6` for better compatible with existing applications.
-
-Our model checkpoints are stored in the block-fp8 format, you can find it on [Huggingface](https://huggingface.co/moonshotai/Kimi-K2-Instruct).
-
-Currently, Kimi-K2 is recommended to run on the following inference engines:
-
-* vLLM
-* SGLang
-* KTransformers
-* TensorRT-LLM
-
-Deployment examples for vLLM and SGLang can be found in the [Model Deployment Guide](docs/deploy_guidance.md).
-
----
-
-## 6. Model Usage
-
-### Chat Completion
-
-Once the local inference service is up, you can interact with it through the chat endpoint:
+Convert UI designs to production code:
 
 ```python
-def simple_chat(client: OpenAI, model_name: str):
-    messages = [
-        {"role": "system", "content": "You are Kimi, an AI assistant created by Moonshot AI."},
-        {"role": "user", "content": [{"type": "text", "text": "Please give a brief self-introduction."}]},
-    ]
-    response = client.chat.completions.create(
-        model=model_name,
-        messages=messages,
-        stream=False,
-        temperature=0.6,
-        max_tokens=256
-    )
-    print(response.choices[0].message.content)
+from multimodal import UIToCodeGenerator
+
+generator = UIToCodeGenerator()
+result = generator.generate(
+    "dashboard.png",
+    framework="react",
+    typescript=True
+)
+print(result.code)
 ```
 
-> [!NOTE]
-> The recommended temperature for Kimi-K2-Instruct is `temperature = 0.6`.
-> If no special instructions are required, the system prompt above is a good default.
+**Supported Frameworks:**
+- HTML/CSS/JavaScript
+- React (TypeScript)
+- Vue 3
+- Tailwind CSS
+- Flutter
+- React Native
 
----
+### 3. Extended Tool Chains
 
-### Tool Calling
-
-Kimi-K2-Instruct has strong tool-calling capabilities.
-To enable them, you need to pass the list of available tools in each request, then the model will autonomously decide when and how to invoke them.
-
-The following example demonstrates calling a weather tool end-to-end:
+Execute 200-300 step tool chains with reasoning:
 
 ```python
-# Your tool implementation
-def get_weather(city: str) -> dict:
-    return {"weather": "Sunny"}
+from tools import ThinkingToolExecutor
 
-# Tool schema definition
-tools = [{
-    "type": "function",
-    "function": {
-        "name": "get_weather",
-        "description": "Retrieve current weather information. Call this when the user asks about the weather.",
-        "parameters": {
-            "type": "object",
-            "required": ["city"],
-            "properties": {
-                "city": {
-                    "type": "string",
-                    "description": "Name of the city"
-                }
-            }
-        }
-    }
-}]
-
-# Map tool names to their implementations
-tool_map = {
-    "get_weather": get_weather
-}
-
-def tool_call_with_client(client: OpenAI, model_name: str):
-    messages = [
-        {"role": "system", "content": "You are Kimi, an AI assistant created by Moonshot AI."},
-        {"role": "user", "content": "What's the weather like in Beijing today? Use the tool to check."}
-    ]
-    finish_reason = None
-    while finish_reason is None or finish_reason == "tool_calls":
-        completion = client.chat.completions.create(
-            model=model_name,
-            messages=messages,
-            temperature=0.6,
-            tools=tools,          # tool list defined above
-            tool_choice="auto"
-        )
-        choice = completion.choices[0]
-        finish_reason = choice.finish_reason
-        if finish_reason == "tool_calls":
-            messages.append(choice.message)
-            for tool_call in choice.message.tool_calls:
-                tool_call_name = tool_call.function.name
-                tool_call_arguments = json.loads(tool_call.function.arguments)
-                tool_function = tool_map[tool_call_name]
-                tool_result = tool_function(**tool_call_arguments)
-                print("tool_result:", tool_result)
-
-                messages.append({
-                    "role": "tool",
-                    "tool_call_id": tool_call.id,
-                    "name": tool_call_name,
-                    "content": json.dumps(tool_result)
-                })
-    print("-" * 100)
-    print(choice.message.content)
+executor = ThinkingToolExecutor(log_reasoning=True)
+result = executor.execute(
+    task="Research and summarize quantum computing papers",
+    tools=research_tools,
+    tool_map=implementations,
+    max_steps=200
+)
 ```
 
-The `tool_call_with_client` function implements the pipeline from user query to tool execution.
-This pipeline requires the inference engine to support Kimi-K2’s native tool-parsing logic.
-For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/tool_call_guidance.md).
+### 4. Browser Automation
 
+AI-controlled web research with Playwright:
+
+```python
+from live_demos import BrowserAgent
+
+async with BrowserAgent() as agent:
+    result = await agent.research("latest AI developments")
+    print(result.summary)
+    print(f"Sources: {len(result.sources)}")
+```
+
+## Model Architecture
+
+| Specification | Value |
+|---------------|-------|
+| Architecture | Mixture-of-Experts (MoE) |
+| Total Parameters | $1 \times 10^{12}$ (1T) |
+| Activated Parameters | $32 \times 10^9$ (32B) |
+| Context Length | $256 \times 10^3$ (256K) |
+| Vision Encoder | MoonViT (400M params) |
+| Attention | Multi-Head Latent Attention |
+| Training Data | ~15T mixed visual and text tokens |
+
+## API Configuration
+
+```python
+from config import APIConfig, KimiMode, MODE_CONFIGS
+
+# Load from environment
+config = APIConfig.from_env()
+
+# Available providers
+# - Moonshot (official): https://api.moonshot.ai/v1
+# - OpenRouter: https://openrouter.ai/api/v1
+# - AIML API: https://api.aimlapi.com/v1
+```
+
+**Model IDs:**
+- `moonshotai/Kimi-K2.5` - Full multimodal model
+- `moonshotai/Kimi-K2-Instruct` - Text-only (legacy)
+- `moonshotai/Kimi-K2-Thinking` - Extended reasoning
+
+## Deployment
+
+Supported inference engines:
+- **vLLM** - Recommended, tensor/expert parallelism
+- **SGLang** - High performance
+- **KTransformers** - CPU optimization
+- **TensorRT-LLM** - Multi-node inference
+
+See [deploy_guidance.md](docs/deploy_guidance.md) for details.
+
+## Examples
+
+| Example | Description |
+|---------|-------------|
+| `examples/quick_start.py` | Basic usage for all modes |
+| `examples/mode_comparison.py` | Side-by-side mode comparison |
+| `multimodal/visual_coding.py` | UI screenshot to code |
+| `swarm/orchestrator.py` | Multi-agent research |
+| `live_demos/browser_agent.py` | Playwright web automation |
+
+## Migration from K2
+
+This repository has been upgraded from K2 to K2.5. Key changes:
+
+| Feature | K2 | K2.5 |
+|---------|-----|------|
+| Model | `Kimi-K2-Instruct` | `Kimi-K2.5` |
+| Context | 128K | 256K |
+| Modality | Text | Text + Image + Video |
+| Tool Steps | ~50 | 200-300 |
+| Agents | 1 | Up to 100 |
+
+Legacy K2 code is preserved in `legacy/`.
+
+## Resources
+
+- **API**: https://platform.moonshot.ai
+- **Chat**: https://www.kimi.com
+- **Kimi Code**: https://www.kimi.com/code
+- **Tech Blog**: https://www.kimi.com/blog/kimi-k2-5.html
+- **Hugging Face**: https://huggingface.co/moonshotai/Kimi-K2.5
+
+## License
+
+Modified MIT License - see [LICENSE](LICENSE)

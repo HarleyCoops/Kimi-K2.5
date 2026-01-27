@@ -1,3 +1,31 @@
-openai>=1.0.0
-requests>=2.25.0
-python-dotenv>=0.19.0 
+# Kimi K2.5 Dependencies
+# ======================
+# Install with: pip install -r requirements.txt
+#
+# For development: pip install -r requirements.txt -r requirements-dev.txt
+
+# Core API client
+openai>=1.0.0              # OpenAI-compatible API client
+requests>=2.25.0           # HTTP library
+python-dotenv>=0.19.0      # Environment variable management
+
+# Async support
+aiohttp>=3.9.0             # Async HTTP client
+asyncio-throttle>=1.0.2    # Rate limiting for async operations
+
+# Image/Video processing (Multimodal)
+pillow>=10.0.0             # Image manipulation
+python-magic>=0.4.27       # File type detection (optional, for validation)
+
+# Browser automation (Live Demos)
+playwright>=1.40.0         # Browser automation framework
+
+# Reliability & Error handling
+tenacity>=8.2.0            # Retry logic with exponential backoff
+
+# CLI & Output formatting
+rich>=13.0.0               # Beautiful terminal output
+click>=8.0.0               # CLI framework (optional)
+
+# Data handling
+pydantic>=2.0.0            # Data validation (optional but recommended)

@@ -1,0 +1,22 @@
+# Development Dependencies for Kimi K2.5
+# ======================================
+# Install with: pip install -r requirements.txt -r requirements-dev.txt
+
+# Testing
+pytest>=7.0.0              # Testing framework
+pytest-asyncio>=0.21.0     # Async testing support
+pytest-cov>=4.0.0          # Coverage reporting
+responses>=0.24.0          # Mock HTTP responses for testing
+
+# Code Quality
+black>=23.0.0              # Code formatting
+flake8>=6.0.0              # Linting
+pylint>=2.17.0             # Advanced linting
+mypy>=1.0.0                # Type checking
+
+# Pre-commit hooks
+pre-commit>=3.0.0          # Git hooks for code quality
+
+# Documentation
+mkdocs>=1.5.0              # Documentation generator
+mkdocs-material>=9.0.0     # Material theme for MkDocs

@@ -2,6 +2,10 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Kimi K2.5 Overview
+
+This repository implements a comprehensive client library for **Kimi K2.5**, Moonshot AI's native multimodal model with agent swarm capabilities. The codebase has been upgraded from K2 to support K2.5's revolutionary features.
+
 ## Common Development Commands
 
 ### Environment Setup
@@ -10,66 +14,211 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 pip install -r requirements.txt
 
 # Configure API key
-python setup_api_key.py
+export MOONSHOT_API_KEY="your_api_key"
+# Or use: python setup_api_key.py
 ```
 
 ### Running Examples
 ```bash
-# Basic API test
-python quick_test.py
+# Quick start
+python examples/quick_start.py
 
-# Comprehensive API examples with tool calling
-python kimi_k2_api_example.py
+# Mode comparison
+python examples/mode_comparison.py
+
+# Test configuration
+python config.py
 ```
 
 ## Code Architecture
 
-### API Integration Architecture
-This repository implements a client library for the Kimi-K2 language model API. The architecture follows these patterns:
+### Core Modules
 
-1. **OpenAI-Compatible Interface**: All API interactions use the OpenAI Python client library with custom base_url pointing to `https://api.moonshot.ai/v1`
+| Module | Purpose |
+|--------|---------|
+| `kimi_client.py` | Unified client supporting all K2.5 modes |
+| `config.py` | Model configs, API settings, mode parameters |
+| `multimodal/` | Image understanding, visual coding |
+| `swarm/` | Multi-agent orchestration |
+| `tools/` | Tool calling infrastructure |
+| `live_demos/` | Browser automation, real integrations |
+| `examples/` | Quick start guides |
+| `legacy/` | Preserved K2 code |
 
-2. **Tool Calling Paradigm**: The codebase emphasizes tool/function calling capabilities with three implementation approaches:
-   - Non-streaming mode with synchronous responses
-   - Streaming mode with real-time token processing
-   - Manual parsing for inference engines without built-in parsers
+### Key Classes
 
-3. **Environment-Based Configuration**: API keys are managed through environment variables (`MOONSHOT_API_KEY`) with `.env` file support
+- **`KimiClient`**: Main client class with mode switching, streaming, multimodal support
+- **`KimiMode`**: Enum for INSTANT, THINKING, AGENT, SWARM modes
+- **`SwarmOrchestrator`**: Multi-agent task decomposition and execution
+- **`UIToCodeGenerator`**: Screenshot to code conversion
+- **`BrowserAgent`**: Playwright-powered web automation
 
-### Key Implementation Details
+## K2.5 Mode Configuration
 
-- **Temperature Scaling**: The Anthropic-compatible API applies `real_temperature = request_temperature * 0.6`
-- **Model Identifier**: Always use `moonshotai/Kimi-K2-Instruct` for the instruction-tuned model
-- **Tool Parser**: When deploying, use `--tool-call-parser kimi_k2` flag for proper tool call parsing
-- **Context Window**: Maximum 128K tokens
+| Mode | Temperature | Use Case |
+|------|-------------|----------|
+| `INSTANT` | 0.6 | Fast responses, chatbots |
+| `THINKING` | 1.0 | Complex reasoning, math, coding |
+| `AGENT` | 0.6 | Autonomous tool use (200-300 steps) |
+| `SWARM` | 1.0 | Multi-agent parallel workflows |
 
-### Tool Call Flow
-1. Define tools using OpenAI function schema format
-2. Pass tools array to chat completion request
-3. Check `finish_reason` for "tool_calls"
-4. **IMPORTANT**: Append assistant message to messages list before processing tool calls
-5. Execute tools using `tool_function(**tool_call_arguments)` (unpack arguments)
-6. Append tool results with `role="tool"`
-7. Continue conversation until completion
+### Mode Selection
+```python
+from kimi_client import KimiClient, KimiMode
+
+client = KimiClient()
+
+# Fast response
+response = client.chat("Quick question", mode=KimiMode.INSTANT)
+
+# With reasoning trace
+response = client.chat("Complex problem", mode=KimiMode.THINKING)
+print(response.reasoning)  # Access thinking process
+```
+
+## API Integration
+
+### Model Names
+- **K2.5**: `moonshotai/Kimi-K2.5` (multimodal, recommended)
+- **K2 Instruct**: `moonshotai/Kimi-K2-Instruct` (text-only, legacy)
+- **K2 Thinking**: `moonshotai/Kimi-K2-Thinking` (extended reasoning)
+
+### Endpoints
+- **Official**: `https://api.moonshot.ai/v1`
+- **OpenRouter**: `https://openrouter.ai/api/v1`
+- **AIML API**: `https://api.aimlapi.com/v1`
+
+### Key Parameters
+- Context window: 256K tokens (K2.5), 128K (K2)
+- Max completion: 96K tokens for reasoning tasks
+- Temperature: 0.6 (instant/agent), 1.0 (thinking/swarm)
+
+## Tool Calling
+
+### Standard Pattern
+```python
+response = client.execute_with_tools(
+    message="Task description",
+    tools=tool_definitions,
+    tool_map={"tool_name": tool_function},
+    max_steps=300  # K2.5 supports up to 300 steps
+)
+```
 
 ### Critical Implementation Notes
-- **Function Calling Pattern**: Use `tool_function(**tool_call_arguments)` to unpack the arguments dictionary
-- **Streaming Mode**: Must append assistant message with tool calls to messages list before processing
-- **Official Guidance Bug**: The documentation shows `tool_function(tool_call_arguments)` but this is incorrect for functions with individual parameters
+- **Unpack arguments**: Use `tool_function(**tool_call_arguments)` not `tool_function(tool_call_arguments)`
+- **Append assistant message before tools**: Required for streaming mode
+- **Tool call parser**: Use `--tool-call-parser kimi_k2` for vLLM/SGLang
 
-### Deployment Considerations
-The model supports deployment on:
-- vLLM (with Tensor Parallelism or Data+Expert Parallelism)
-- SGLang (with TP or DP+EP configurations)
-- KTransformers (CPU optimization with AMX)
-- TensorRT-LLM (multi-node inference)
+### Parallel Execution
+```python
+from tools import ParallelToolExecutor
 
-Note: The model reuses DeepSeekV3CausalLM architecture but uses `"model_type": "kimi_k2"` in config.json for proper optimization.
+executor = ParallelToolExecutor(max_concurrent=100)
+results = await executor.execute_batch(tool_calls, tool_map)
+# Supports up to 1,500 concurrent calls
+```
+
+## Multimodal Capabilities
+
+### Image Input
+```python
+response = client.chat_with_image(
+    "Describe this UI",
+    "screenshot.png",
+    mode=KimiMode.THINKING
+)
+```
+
+### Visual Coding
+```python
+from multimodal import UIToCodeGenerator
+
+generator = UIToCodeGenerator()
+result = generator.generate("ui.png", framework="react")
+```
+
+### Supported Formats
+- Images: PNG, JPG, JPEG, GIF, WEBP, BMP
+- Video: MP4, WEBM, AVI, MOV (official API only)
+
+## Agent Swarm
+
+### Architecture
+```
+Orchestrator (thinking mode)
+    ├── Task decomposition
+    ├── Agent creation (up to 100)
+    └── Result aggregation
+
+Sub-agents (parallel execution)
+    ├── ResearchAgent
+    ├── CodingAgent
+    ├── AnalysisAgent
+    ├── VerificationAgent
+    └── WriterAgent
+```
+
+### Usage
+```python
+from swarm import SwarmOrchestrator
+
+orchestrator = SwarmOrchestrator()
+result = await orchestrator.execute("Complex research task")
+print(result.summary)
+print(f"Agents used: {result.total_agents}")
+print(f"Tool calls: {result.total_tool_calls}")
+```
+
+## Deployment
+
+### Supported Engines
+- **vLLM**: Tensor/Expert Parallelism
+- **SGLang**: High performance
+- **KTransformers**: CPU with AMX
+- **TensorRT-LLM**: Multi-node
+
+### Required Flags
+```bash
+# vLLM
+--tool-call-parser kimi_k2
+--enable-auto-tool-choice
+
+# Config
+"model_type": "kimi_k2"
+```
+
+## Testing
+
+```bash
+# Test config
+python config.py
+
+# Test client
+python kimi_client.py
+
+# Test tools
+python tools/builtin_tools.py
+
+# Full quick start
+python examples/quick_start.py
+```
 
 ## Mathematical Notation
 
-The repository uses LaTeX/KaTeX mathematical notation in documentation:
-- Inline math: `$x = y$` renders as $x = y$
-- Display math: `$$W \leftarrow W - \eta \nabla W$$` renders as centered equation
-- GitHub now supports mathematical rendering natively in markdown files
-- Use proper mathematical symbols: $\times$, $\leftarrow$, $\nabla$, $\sqrt{}$, etc.
+The repository uses LaTeX/KaTeX in documentation:
+- Inline: `$x = y$`
+- Display: `$$W \leftarrow W - \eta \nabla W$$`
+
+## Migration Notes (K2 → K2.5)
+
+| Change | K2 | K2.5 |
+|--------|-----|------|
+| Model | `Kimi-K2-Instruct` | `Kimi-K2.5` |
+| Context | 128K | 256K |
+| Modality | Text | Text + Image + Video |
+| Tool steps | ~50 | 200-300 |
+| Agents | 1 | Up to 100 |
+| Parallel calls | Sequential | 1,500 concurrent |
+
+Legacy K2 code preserved in `legacy/` directory.
