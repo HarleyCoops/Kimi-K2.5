@@ -22,8 +22,20 @@
 </div>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://www.kimi.com/blog/kimi-k2-5.html">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🤗&nbsp;&nbsp;<a href="https://huggingface.co/moonshotai/Kimi-K2.5">Model Card</a></b>
+<b><a href="https://www.kimi.com/blog/kimi-k2-5.html">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b><a href="https://huggingface.co/moonshotai/Kimi-K2.5">Model Card</a></b>
 </p>
+
+## Install Kimi CLI
+
+```bash
+pip install kimi-cli
+```
+
+Then start coding with Kimi K2.5 directly in your terminal:
+
+```bash
+kimi
+```
 
 ## Kimi K2.5: Visual Agentic Intelligence
 
