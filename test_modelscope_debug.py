@@ -3,6 +3,7 @@
 Debug ModelScope MCP Server
 """
 
+import os
 import subprocess
 import sys
 import threading
@@ -16,8 +17,13 @@ def read_output(pipe, prefix):
 
 def test_modelscope():
     """Test ModelScope MCP server"""
-    
-    api_token = "sk-kimi-uXQjtFdVGqyz67t3NYh3wFdU0VerKbiUqGt2Ffef1rQ4WYxGdga8T2NnM01Cf7OI"
+
+    api_token = os.environ.get("MODELSCOPE_API_TOKEN")
+    if not api_token:
+        raise SystemExit(
+            "MODELSCOPE_API_TOKEN is not set. "
+            "Set it in your environment before running this test."
+        )
     
     print("=" * 60)
     print("Debugging ModelScope MCP Server")
