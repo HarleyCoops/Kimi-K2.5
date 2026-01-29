@@ -38,10 +38,15 @@ Example Usage:
 
 import json
 import asyncio
+import sys
+from pathlib import Path
 from typing import List, Dict, Any, Optional, Callable, Tuple
 from dataclasses import dataclass, field
 from datetime import datetime
 import logging
+
+# Add parent directory to path for imports when running as script
+sys.path.insert(0, str(Path(__file__).parent.parent))
 
 from kimi_client import KimiClient, KimiMode, KimiResponse
 from swarm.agents.base_agent import BaseAgent, AgentRole, AgentResult, AgentConfig

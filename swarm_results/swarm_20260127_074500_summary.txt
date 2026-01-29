@@ -1,0 +1,10 @@
+Task: What are the key features of Python 3.12?
+Success: True
+Agents: 3
+Tool Calls: 0
+Time: 182.60s
+============================================================
+
+Python 3.12 delivers substantial improvements across both performance and developer experience. On the performance front, the release introduces lightweight frame objects that reduce memory overhead by roughly 80% (from ~1.5KB to ~200-300 bytes) and optimize Python-to-Python function calls, alongside PEP 709's inline comprehensions that deliver 30-40% speedups by eliminating temporary function objects. Interpreter startup times improved 10-15% through PEP 683's immortal objects and reduced malloc calls, benefiting CLI tools and short-running scripts.
+
+The type system underwent significant modernization through PEP 695, introducing a new `type` statement for explicit type alias declarations and inline generic syntax that eliminates boilerplate TypeVar declarations. Complementing these ergonomics improvements, PEP 698 adds an `@override` decorator enabling type checkers to validate method overrides, while PEP 705 introduces `ReadOnly` typed dictionary keys for safer data modeling. Together, these changes position Python's type system closer to modern statically-typed languages while maintaining backward compatibility.

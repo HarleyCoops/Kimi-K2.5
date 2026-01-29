@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "modelscope": {
+      "command": "uvx",
+      "args": ["modelscope-mcp-server"],
+      "env": {
+        "MODELSCOPE_API_TOKEN": "sk-kimi-uXQjtFdVGqyz67t3NYh3wFdU0VerKbiUqGt2Ffef1rQ4WYxGdga8T2NnM01Cf7OI"
+      }
+    }
+  }
+}

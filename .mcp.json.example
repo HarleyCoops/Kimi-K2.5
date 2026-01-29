@@ -1,0 +1,25 @@
+{
+  "mcpServers": {
+    "modelscope": {
+      "command": "uvx",
+      "args": ["modelscope-mcp-server"],
+      "env": {
+        "MODELSCOPE_API_TOKEN": "your-modelscope-api-token"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": ["-y", "@anthropic-ai/mcp-server-fs", "/path/to/allowed/directory"]
+    },
+    "web-search": {
+      "command": "uvx",
+      "args": ["mcp-server-fetch"]
+    },
+    "custom-http-server": {
+      "url": "http://127.0.0.1:8000/mcp/",
+      "headers": {
+        "Authorization": "Bearer your-api-key"
+      }
+    }
+  }
+}

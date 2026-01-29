@@ -1,0 +1,94 @@
+### Performance Enhancements
+
+#### Frame Stack and Call Optimizations
+Python 3.12 reimplemented frame objects using a "lightweight frames" architecture that lazily materializes full frame objects only when required (e.g., for exceptions or introspection). This change reduces frame object size from approximately 1.5KB to 200-300 bytes and increases viable stack depth by ~20% before hitting recursion limits. The interpreter now employs "shallow frame" mechanisms that reuse frame objects during recursive calls, reducing overhead for nested Python-to-Python calls. While often described as "tail call optimization," this is more accurately frame reuse—it does not provide infinite tail recursion capability (the recursion limit still applies), but does improve deep recursion performance by 10-20%.
+
+**Key Technical Changes:**
+- Stack-based internal frame representation with zero-copy local variable access via offset calculations
+- Specialized opcodes (`LOAD_FAST` optimizations) targeting the new frame layout
+- "Shaved" intermediate frames in generator expressions and coroutines
+- `sys._getframe()` continues to work but may trigger frame materialization
+
+#### Interpreter Startup Improvements (PEP 683)
+The implementation of "immortal objects" (PEP 683) and memory restructuring reduced `malloc()` calls during startup by 30-40%, yielding 10-15% faster cold starts and 5-8% reduced initial memory footprint. Core immutable objects (strings, integers, tuples) are now statically allocated or use memory arenas rather than individual heap allocations, significantly benefiting short-running scripts and containerized deployments.
+
+#### Optimized Comprehensions (PEP 709)
+List, dict, and set comprehensions are now implemented as inline operations rather than creating separate code and function objects. By executing in the current local scope with stack-based iteration (eliminating dictionary lookups for iterator variables), comprehensions run 30-40% faster with reduced memory allocation and better cache locality.
+
+```python
+# This pattern is ~35% faster in 3.12 vs 3.11
+[x*2 for x in range(1000) if x % 2 == 0]
+```
+
+### Type System Enhancements
+
+#### Generic Syntax and Type Aliases (PEP 695)
+Python 3.12 introduces a modernized syntax for generics and type aliases that eliminates boilerplate while improving scoping rules:
+
+**New `type` Statement:**
+```python
+# Explicit type alias syntax
+type Point = tuple[float, float]
+type Vector[T] = list[T]
+type Mapping[K, V] = dict[K, V]
+type Ordered[T: (int, float)] = list[T]  # Constrained
+```
+
+**Inline Generic Syntax:**
+Functions and classes can now declare type parameters directly in brackets, removing the need for explicit `TypeVar` declarations:
+
+```python
+# Function generics
+def pair[T, S: int](x: T, y: S) -> tuple[T, S]:
+    return (x, y)
+
+# Class generics with variance
+class Container[T]:
+    def get(self) -> T: ...
+
+class Producer[+T_co]:  # Covariant
+    def make(self) -> T_co: ...
+```
+
+Type parameters support bounds (`T: int`), constraints (`T: (int, str)`), and explicit variance (`+T` for covariant, `-T` for contravariant). They are scoped to their defining class or function, preventing namespace pollution.
+
+#### Override Decorator (PEP 698)
+The new `@override` decorator (from `typing.override`) enables static type checkers to verify that a method actually overrides a parent class method. This runtime no-op helps catch refactoring errors when base class methods are renamed or removed:
+
+```python
+from typing import override
+
+class Dog(Animal):
+    @override
+    def make_sound(self) -> str:  # Valid
+        return "woof"
+    
+    @override
+    def move(self) -> str:  # Type checker error: no parent method
+        return "run"
+```
+
+#### TypedDict ReadOnly (PEP 705)
+TypedDict now supports the `ReadOnly` type qualifier to mark keys as immutable, combining with `Required`/`NotRequired` (3.11) for precise schema modeling:
+
+```python
+from typing import TypedDict, ReadOnly, Required
+
+class Employee(TypedDict):
+    id: ReadOnly[int]              # Immutable after creation
+    name: Required[str]
+    department: NotRequired[str]
+    version: ReadOnly[Required[str]]  # Both required and immutable
+```
+
+While runtime behavior remains unchanged (Python does not enforce runtime const-ness), type checkers reject assignments to `ReadOnly` keys, improving safety for API responses and configuration objects.
+
+### Tooling and Compatibility
+- **Type Checkers:** Full support requires mypy ≥1.7 or pyright ≥1.1.350 for PEP 695 and PEP 698 features
+- **Performance Benchmarks:** Python 3.12 achieves an overall 5-10% improvement in the pyperformance suite compared to 3.11
+- **Backward Compatibility:** All typing features are backward compatible; assignment-style type aliases and explicit TypeVar declarations remain valid but are considered legacy syntax
+
+### Important Clarifications
+- **Tail Call Optimization:** Despite optimizations to frame handling, Python 3.12 does not implement true tail call elimination. The recursion limit still applies, though deep recursion is more efficient.
+- **Type Parameter Defaults:** Default types for generics (e.g., `T = int`) were deferred to Python 3.13 via PEP 696.
+- **`final` vs `ReadOnly`:** Python 3.12 introduced `ReadOnly` for TypedDict fields; the `@final` decorator applies to classes, not individual dictionary keys.

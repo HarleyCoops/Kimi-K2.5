@@ -195,7 +195,7 @@ Report your findings clearly and concisely.""",
 class AgentConfig:
     """Configuration for an agent"""
     max_steps: int = 100
-    temperature: float = 0.6
+    temperature: float = 1.0
     max_tokens: int = 4096
     timeout: int = 300  # 5 minutes
     retry_on_error: bool = True
