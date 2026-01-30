@@ -3,6 +3,7 @@
 Test ModelScope Python SDK
 """
 
+import os
 import sys
 
 def test_modelscope_sdk():
@@ -44,22 +45,25 @@ def test_modelscope_sdk():
     
     # Try with API token
     print("\n[Test] Testing with API token...")
-    try:
-        from modelscope.hub.api import HubApi
-        
-        api_token = "sk-kimi-uXQjtFdVGqyz67t3NYh3wFdU0VerKbiUqGt2Ffef1rQ4WYxGdga8T2NnM01Cf7OI"
-        api = HubApi()
-        api.login(api_token)
-        
-        # Get user info
-        user_info = api.get_user_info()
-        print(f"[OK] Logged in successfully")
-        print(f"  User: {user_info}")
-        
-    except Exception as e:
-        print(f"[ERROR] {e}")
-        import traceback
-        traceback.print_exc()
+    api_token = os.environ.get("MODELSCOPE_API_TOKEN")
+    if not api_token:
+        print("[SKIP] MODELSCOPE_API_TOKEN not set; skipping login test.")
+    else:
+        try:
+            from modelscope.hub.api import HubApi
+
+            api = HubApi()
+            api.login(api_token)
+
+            # Get user info
+            user_info = api.get_user_info()
+            print("[OK] Logged in successfully")
+            print(f"  User: {user_info}")
+
+        except Exception as e:
+            print(f"[ERROR] {e}")
+            import traceback
+            traceback.print_exc()
     
     print("\n" + "=" * 60)
     print("SDK Test completed!")

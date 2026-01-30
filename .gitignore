@@ -6,6 +6,13 @@
 .env.production
 *.env
 
+# Local MCP / Claude configs (do not commit)
+.mcp.json
+.claude/settings.local.json
+
+# Local outputs
+swarm_results/
+
 # API Keys and credentials
 api_keys.txt
 credentials.json

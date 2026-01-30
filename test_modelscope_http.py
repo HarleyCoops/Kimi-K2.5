@@ -3,6 +3,7 @@
 Test ModelScope MCP Server via HTTP transport
 """
 
+import os
 import json
 import requests
 import subprocess
@@ -11,8 +12,13 @@ import time
 
 def test_modelscope_http():
     """Test ModelScope MCP server via HTTP"""
-    
-    api_token = "sk-kimi-uXQjtFdVGqyz67t3NYh3wFdU0VerKbiUqGt2Ffef1rQ4WYxGdga8T2NnM01Cf7OI"
+
+    api_token = os.environ.get("MODELSCOPE_API_TOKEN")
+    if not api_token:
+        raise SystemExit(
+            "MODELSCOPE_API_TOKEN is not set. "
+            "Set it in your environment before running this test."
+        )
     port = 8000
     
     print("=" * 60)
